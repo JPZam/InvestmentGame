@@ -11,7 +11,10 @@ class Users:
         self.CashBalance = float(input("Your current Cash Balance is: "))
         self.Portfolio = {}
         self.Transactions = []
-# write to txt file
+        #f = open("UserList.txt", "w")
+        #f.write(str(self.UserID))
+        #f.close()
+
 
 user1 = Users(1, 1, 1, {}, 1)
 # user2 = Users(1, 1, 1, 1, 1)
@@ -56,7 +59,6 @@ getStocksData('IBM')
 
 
 
-
 #class Stocks:
     # This class represents the stocks in a stock market
 
@@ -76,3 +78,5 @@ def buy_stock(user, ticker, price, volume):
         user.Transactions.append(temp)
 
 buy_stock(user1, 'MSFT', 1.00, 10)
+buy_stock(user1, 'AAPL', 5.00, 20)
+print(user1.CashBalance)
