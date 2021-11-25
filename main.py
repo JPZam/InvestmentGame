@@ -1,18 +1,17 @@
 import pandas as pd
+import requests
 
-UserID = input("Please type in your UserID: ")
-UserName = input("Please type in your name and press Enter: ")
-CashBalance = input("Your current Cash Balance is: ")
-Portfolio = input("Please enter your stock portfolio: ")
 
 class Users:
     # This class represents a user in the stock market
 
-    def __init__(self, UserID, UserName, CashBalance, Portfolio):
-        self.UserID = UserID
-        self.UserName = UserName
-        self.CashBalance = CashBalance
-        self.Portfolio = []
+    def __init__(self, UserID, UserName, CashBalance, Portfolio, Transactions):
+        self.UserID = input("Please type in your UserID: ")
+        self.UserName = input("Please type in your name and press Enter: ")
+        self.CashBalance = float(input("Your current Cash Balance is: "))
+        self.Portfolio = {}
+        self.Transactions = []
+# write to txt file
 
 user1 = Users(1, 1, 1, {}, 1)
 # user2 = Users(1, 1, 1, 1, 1)
