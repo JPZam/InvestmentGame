@@ -1,5 +1,7 @@
 import pandas as pd
 import requests
+import matplotlib.pyplot as plt
+
 
 
 class Users:
@@ -46,15 +48,11 @@ def getStocksData(ticker):
     df.index = pd.DatetimeIndex(df.index)
     df.rename(columns=lambda s: s[3:], inplace=True)
 
-    return df.head()
+    print(df.head())
+    return df
 
 
 getStocksData('IBM')
-
-
-
-
-
 
 
 
@@ -80,7 +78,7 @@ def buy_stock(user, ticker, price, volume):
         user.Transactions.insert(0, temp)
 
 buy_stock(user1, 'MSFT', 1.00, 10)
-buy_stock(user1, 'AAPL', 5.00, 20)
+buy_stock(user1, 'IBM', 5.00, 20)
 print(user1.CashBalance)
 print(user1.Transactions)
 print(user1.Portfolio)
@@ -111,8 +109,20 @@ def sell_stock(user, ticker, price, volume):
 
     # SellPrice = input("Please type for what price you want to sell each stock: ")
 sell_stock(user1, 'MSFT', 1.00, 10)
-sell_stock(user1, 'AAPL', 5.00, 10)
+sell_stock(user1, 'IBM', 5.00, 10)
 #sell_stock(user1, 'AAPL', 5.00, 20)
 print(user1.CashBalance)
 print(user1.Transactions)
 print(user1.Portfolio)
+
+
+def plotStocksData(user):
+    # looping through all stocks in the portfolio
+    for k in user.Portfolio:
+        print(k)
+        df = getStocksData(k)
+        plt.plot(df['close'], label=k)
+    plt.legend()
+    plt.show()
+
+plotStocksData(user1)
