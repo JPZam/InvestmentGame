@@ -1,7 +1,7 @@
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
-
+from pydantic import BaseModel
 
 
 class Users:
@@ -26,8 +26,57 @@ class Users:
         print('Your current portfolio value is: ', round(total_balance, 2))
         return total_balance
 
-user1 = Users(1, 'Python', 10000, {}, [])
+#user1 = Users(1, 'Python', 10000, {}, [])
 # user2 = Users(1, 1, 1, {}, 1)
+
+class Users2(BaseModel):
+    #UserID: int
+    UserName: str
+    CashBalance: int
+    Portfolio: dict
+    Transactions: list
+
+
+def new_user():
+    UserNameTemp = input("Please enter your new username and press Enter: ")
+    #UserIDTemp = hash(UserNameTemp)
+    f = open("UserList.txt", "r")
+    userlist = f.readlines()
+    f.close()
+    if UserNameTemp in userlist:
+        print("This user name already exists!")
+        return
+    else:
+        print("Welcome, ", UserNameTemp)
+        CashBalanceTemp = float(input("Please enter your current cash balance and Press Enter: €"))
+        f = open("UserList.txt", "a")
+        f.write(str(UserNameTemp) + "\n")
+        f.close()
+        user = Users2(UserName=UserNameTemp, CashBalance=CashBalanceTemp, Portfolio={},
+                      Transactions=[])
+        return user
+
+
+def login():
+    newuser = 0
+    while newuser not in ["y", "n"]:
+        newuser = input("Welcome to the Investment Game! Are you a new user? Y/N: ").lower()
+    if newuser == "y":
+        user1 = new_user()
+        print(user1.json())
+    else:
+        name = input("Enter your user name: ")
+        # hashed_name = hash(name)
+        f = open("UserList.txt", "r")
+        userlist = f.readlines()
+        f.close()
+        if name in userlist:
+            # read in data from file on user
+            print("Welcome back, user")
+        else:
+           print("This user does not exist")
+
+login()
 
 
 # this function will return the correct stocks data corresponding to the ticker
@@ -134,3 +183,20 @@ def plotStocksData(user):
     plt.show()
 
 plotStocksData(user1)
+
+#View cash balance
+def current_cashbalance(user):
+    print("Your current cash balance is ", user.CashBalance, ".")
+
+def view_portfolio(user): #date toevoegen? moet er iets met transacties?
+    # welke aandelen zitten er in het portfolio op dit moment -> user.portfolio
+
+    # stock data ophalen van API (afh van datum)
+    # totale waarde van alle aandelen berekenen -> volume * price
+    # resultaten weergeven
+    # if cashbalance == 0:
+    #     print ("Your portfolio is currently empty ")
+    # else:
+    #     print ("Your currrent portfolio consists of:" + str(portfolio) "resulting in a total cash balance of:" + str(cashbalance)"")
+
+    print("nothing")
