@@ -11,13 +11,13 @@ class Users:
         self.CashBalance = float(input("Your current Cash Balance is: "))
         self.Portfolio = {}
         self.Transactions = []
-        #f = open("UserList.txt", "w")
-        #f.write(str(self.UserID))
-        #f.close()
+        f = open("UserList.txt", "a")
+        f.write(str(self.UserID))
+        f.close()
 
 
 user1 = Users(1, 1, 1, {}, 1)
-# user2 = Users(1, 1, 1, 1, 1)
+# user2 = Users(1, 1, 1, {}, 1)
 
 
 # this function will return the correct stocks data corresponding to the ticker
@@ -74,9 +74,45 @@ def buy_stock(user, ticker, price, volume):
             user.Portfolio[ticker] += volume
         else:
             user.Portfolio[ticker] = volume
-        temp = [ticker, price, volume]
-        user.Transactions.append(temp)
+        print("You bought " + str(volume) + " shares in " + ticker + "! You now have " + str(user.Portfolio[ticker]) +
+              " shares in this company.")
+        temp = [ticker, price, volume] # TO BE ADDED: time and date of transaction
+        user.Transactions.insert(0, temp)
 
 buy_stock(user1, 'MSFT', 1.00, 10)
 buy_stock(user1, 'AAPL', 5.00, 20)
 print(user1.CashBalance)
+print(user1.Transactions)
+print(user1.Portfolio)
+
+
+def sell_stock(user, ticker, price, volume):
+    if ticker not in user.Portfolio:
+        print("You do not have this stock in your portfolio")
+        return
+
+    currentVolume = user.Portfolio[ticker]
+    if currentVolume < volume:
+        print("You do not have enough stocks in your Portfolio to sell")
+        return
+    elif currentVolume > volume:
+        user.Portfolio[ticker] -= volume
+        user.CashBalance += price * volume
+        print("You sold " + str(volume) + " shares in " + ticker + "! You have " + str(user.Portfolio[ticker]) +
+              " shares remaining.")
+        temp = [ticker, price, -volume]  # TO BE ADDED: time and date of transaction
+        user.Transactions.insert(0, temp)
+    else:
+        user.Portfolio.pop(ticker)
+        user.CashBalance += price * volume
+        print("You sold " + str(volume) + " shares in " + ticker + "! You now have no shares left in this company.")
+        temp = [ticker, price, -volume]  # TO BE ADDED: time and date of transaction
+        user.Transactions.insert(0, temp)
+
+    # SellPrice = input("Please type for what price you want to sell each stock: ")
+sell_stock(user1, 'MSFT', 1.00, 10)
+sell_stock(user1, 'AAPL', 5.00, 10)
+#sell_stock(user1, 'AAPL', 5.00, 20)
+print(user1.CashBalance)
+print(user1.Transactions)
+print(user1.Portfolio)
