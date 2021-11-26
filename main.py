@@ -8,17 +8,25 @@ class Users:
     # This class represents a user in the stock market
 
     def __init__(self, UserID, UserName, CashBalance, Portfolio, Transactions):
-        self.UserID = input("Please type in your UserID: ")
-        self.UserName = input("Please type in your name and press Enter: ")
-        self.CashBalance = float(input("Your current Cash Balance is: "))
-        self.Portfolio = {}
-        self.Transactions = []
+        self.UserID = UserID
+        self.UserName = UserName
+        self.CashBalance = CashBalance
+        self.Portfolio = Portfolio
+        self.Transactions = Transactions
         f = open("UserList.txt", "a")
         f.write(str(self.UserID))
         f.close()
 
+    def calculate_balance(self):
+        total_balance = 0
+        for k, v in self.Portfolio.items():
+            balance = get_stocks_data(k)['close'].iloc[0] * v
+            total_balance += balance
 
-user1 = Users(1, 1, 1, {}, 1)
+        print('Your current portfolio value is: ', round(total_balance, 2))
+        return total_balance
+
+user1 = Users(1, 'Python', 10000, {}, [])
 # user2 = Users(1, 1, 1, {}, 1)
 
 
@@ -108,7 +116,7 @@ def sell_stock(user, ticker, price, volume):
         user.Transactions.insert(0, temp)
 
     # SellPrice = input("Please type for what price you want to sell each stock: ")
-sell_stock(user1, 'MSFT', 1.00, 10)
+#sell_stock(user1, 'MSFT', 1.00, 10)
 sell_stock(user1, 'IBM', 5.00, 10)
 #sell_stock(user1, 'AAPL', 5.00, 20)
 print(user1.CashBalance)
