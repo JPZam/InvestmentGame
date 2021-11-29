@@ -1,0 +1,6 @@
+{
+    "Joris": "{\"UserName\": \"Joris\", \"CashBalance\": 500, \"Portfolio\": {}, \"Transactions\": []}",
+    "test123": "{\"UserName\": \"test123\", \"CashBalance\": 1000, \"Portfolio\": {}, \"Transactions\": []}",
+    "mark123": "{\"UserName\": \"mark123\", \"CashBalance\": 300, \"Portfolio\": {}, \"Transactions\": []}",
+    "tim123": "{\"UserName\": \"tim123\", \"CashBalance\": 4880.0, \"Portfolio\": {\"MSFT\": 20, \"IBM\": 20}, \"Transactions\": [[\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10], [\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10]]}"
+}
