@@ -2,3 +2,7 @@ Joris
 test123
 mark123
 tim123
+sam123
+new_user
+rjekker
+adib

@@ -1,6 +1,10 @@
 {
-    "Joris": "{\"UserName\": \"Joris\", \"CashBalance\": 500, \"Portfolio\": {}, \"Transactions\": []}",
+    "Joris": "{\"UserName\": \"Joris\", \"CashBalance\": 340.75, \"Portfolio\": {\"MSFT\": 1, \"IBM\": 1}, \"Transactions\": [[\"IBM\", 131.25, 1, \"2010-04-14T00:00:00\"], [\"MSFT\", 29.27, 1, \"2010-04-05T00:00:00\"], [\"MSFT\", 29.59, -1, 2944], [\"MSFT\", 28.46, 1, \"2010-03-03T00:00:00\"], [\"MSFT\", 28.67, -10], [\"MSFT\", 28.46, 10, \"2010-02-02T00:00:00\"]]}",
     "test123": "{\"UserName\": \"test123\", \"CashBalance\": 1000, \"Portfolio\": {}, \"Transactions\": []}",
     "mark123": "{\"UserName\": \"mark123\", \"CashBalance\": 300, \"Portfolio\": {}, \"Transactions\": []}",
-    "tim123": "{\"UserName\": \"tim123\", \"CashBalance\": 4880.0, \"Portfolio\": {\"MSFT\": 20, \"IBM\": 20}, \"Transactions\": [[\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10], [\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10]]}"
+    "tim123": "{\"UserName\": \"tim123\", \"CashBalance\": 4880.0, \"Portfolio\": {\"MSFT\": 20, \"IBM\": 20}, \"Transactions\": [[\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10], [\"IBM\", 5.0, -10], [\"IBM\", 5.0, 20], [\"MSFT\", 1.0, 10]]}",
+    "sam123": "{\"UserName\": \"sam123\", \"CashBalance\": 1000, \"Portfolio\": {}, \"Transactions\": []}",
+    "new_user": "{\"UserName\": \"new_user\", \"CashBalance\": 8668.8, \"Portfolio\": {\"IBM\": 10}, \"Transactions\": [[\"IBM\", 131.78, -10, 2987], [\"IBM\", 132.45, 20, \"2010-01-04T00:00:00\"]]}",
+    "rjekker": "{\"UserName\": \"rjekker\", \"CashBalance\": 1000000, \"Portfolio\": {}, \"Transactions\": []}",
+    "adib": "{\"UserName\": \"adib\", \"CashBalance\": 996988.0, \"Portfolio\": {\"IBM\": 10, \"MSFT\": 50}, \"Transactions\": [[\"MSFT\", 28.18, -50, 2978], [\"MSFT\", 30.96, 100, \"2010-01-14T00:00:00\"], [\"IBM\", 132.45, 10, \"2010-01-04T00:00:00\"]]}"
 }
