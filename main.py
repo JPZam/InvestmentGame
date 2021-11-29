@@ -1,7 +1,16 @@
+import json
 import pandas as pd
 import requests
 import matplotlib.pyplot as plt
 from pydantic import BaseModel
+
+# readInUsers
+f = open('data.json', 'r')
+try:
+    allUsers = json.loads(f.read())
+except:
+    allUsers = {}
+f.close()
 
 
 class Users:
@@ -29,8 +38,8 @@ class Users:
 #user1 = Users(1, 'Python', 10000, {}, [])
 # user2 = Users(1, 1, 1, {}, 1)
 
+
 class Users2(BaseModel):
-    #UserID: int
     UserName: str
     CashBalance: int
     Portfolio: dict
@@ -39,15 +48,14 @@ class Users2(BaseModel):
 
 def new_user():
     UserNameTemp = input("Please enter your new username and press Enter: ")
-    #UserIDTemp = hash(UserNameTemp)
     f = open("UserList.txt", "r")
-    userlist = f.readlines()
+    userlist = f.read().splitlines()
     f.close()
     if UserNameTemp in userlist:
         print("This user name already exists!")
         return
     else:
-        print("Welcome, ", UserNameTemp)
+        print("Welcome,", UserNameTemp)
         CashBalanceTemp = float(input("Please enter your current cash balance and Press Enter: €"))
         f = open("UserList.txt", "a")
         f.write(str(UserNameTemp) + "\n")
@@ -62,22 +70,47 @@ def login():
     while newuser not in ["y", "n"]:
         newuser = input("Welcome to the Investment Game! Are you a new user? Y/N: ").lower()
     if newuser == "y":
-        user1 = new_user()
-        print(user1.json())
+        userCurrent = new_user()
+        try:
+            # f = open('data.json', 'w')
+            userjson = userCurrent.json()
+            # json.dump(userjson, f, indent=4)
+            # f.close()
+            allUsers[userCurrent.UserName] = userjson
+            # print(allUsers)
+            f = open('data.json', 'w')
+            f.write(json.dumps(allUsers, indent=4))
+            f.close()
+        except:
+            print("")
+        return userCurrent
     else:
         name = input("Enter your user name: ")
         # hashed_name = hash(name)
         f = open("UserList.txt", "r")
-        userlist = f.readlines()
+        userlist = f.read().splitlines()
         f.close()
         if name in userlist:
             # read in data from file on user
-            print("Welcome back, user")
+            print("Welcome back, ", name)
+            userCurrent = Users2.parse_raw(allUsers[name])
+            return userCurrent
         else:
-           print("This user does not exist")
+            print("This user does not exist")
+            userCurrent = None
+            return userCurrent
 
-login()
 
+user1 = login()
+print(user1)
+
+# IMPORTANT
+# userjson = userCurrent.json()
+# allUsers[userCurrent.UserName] = userjson
+# vs
+# f = open('data.json', 'w')
+# f.write(json.dumps(allUsers, indent=4))
+# f.close()
 
 # this function will return the correct stocks data corresponding to the ticker
 # more can be found on 'search endpoint', but let's use this list for now
@@ -120,10 +153,10 @@ getStocksData('IBM')
 #    def __init__(self,
 
 def buy_stock(user, ticker, price, volume):
-     total_price = price * volume
-     if user.CashBalance <= total_price:
-         print('You do not have enough cash balance')
-     else:
+    total_price = price * volume
+    if user.CashBalance <= total_price:
+        print('You do not have enough cash balance')
+    else:
         user.CashBalance -= total_price
         if ticker in user.Portfolio:
             user.Portfolio[ticker] += volume
@@ -133,6 +166,9 @@ def buy_stock(user, ticker, price, volume):
               " shares in this company.")
         temp = [ticker, price, volume] # TO BE ADDED: time and date of transaction
         user.Transactions.insert(0, temp)
+        userjson = user1.json()
+        allUsers[user1.UserName] = userjson
+
 
 buy_stock(user1, 'MSFT', 1.00, 10)
 buy_stock(user1, 'IBM', 5.00, 20)
@@ -164,7 +200,11 @@ def sell_stock(user, ticker, price, volume):
         temp = [ticker, price, -volume]  # TO BE ADDED: time and date of transaction
         user.Transactions.insert(0, temp)
 
+    userjson = user1.json()
+    allUsers[user1.UserName] = userjson
     # SellPrice = input("Please type for what price you want to sell each stock: ")
+
+
 #sell_stock(user1, 'MSFT', 1.00, 10)
 sell_stock(user1, 'IBM', 5.00, 10)
 #sell_stock(user1, 'AAPL', 5.00, 20)
@@ -172,6 +212,9 @@ print(user1.CashBalance)
 print(user1.Transactions)
 print(user1.Portfolio)
 
+f = open('data.json', 'w')
+f.write(json.dumps(allUsers, indent=4))
+f.close()
 
 def plotStocksData(user):
     # looping through all stocks in the portfolio
